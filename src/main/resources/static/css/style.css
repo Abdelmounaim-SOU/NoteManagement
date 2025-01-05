@@ -1,0 +1,27 @@
+
+body {
+    background-color: white;
+}
+.navbar {
+    background-color: transparent !important;
+    border: none;
+    box-shadow: none;
+}
+.navbar-brand, .nav-link {
+    color: black !important;
+    font-size: 1.25rem; /* Increase font size */
+}
+.btn {
+    color: white;
+    background-color: blue;
+    border-color: blue;
+    font-size: 1.1rem; /* Increase button size */
+    padding: 0.5rem 1rem; /* Add padding for larger buttons */
+}
+.btn:hover {
+    background-color: darkblue;
+    border-color: darkblue;
+}
+.navbar-nav {
+    margin-left: auto;
+}
