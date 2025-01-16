@@ -2,19 +2,30 @@ package com.example.notemanagment.Models;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    private int id;
 
-    @Column(unique = true , nullable = false)
-    private String username ;
-    private String password ;
-    private String role ;
+    @Column(unique = true, nullable = false)
+    private String username;
+    private String password;
+    private String role;
+
+    // One-to-One relationship with Prof (if the user is a professor)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Professor prof;
+
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -40,11 +51,11 @@ public class User {
         this.role = role;
     }
 
-    public int getId() {
-        return id;
+    public Professor getProf() {
+        return prof;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setProf(Professor prof) {
+        this.prof = prof;
     }
 }

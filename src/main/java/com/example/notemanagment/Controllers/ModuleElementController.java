@@ -65,13 +65,36 @@ public class ModuleElementController {
             @RequestParam Long moduleId,
             @RequestParam String name,
             @RequestParam Double coefficient,
-            @RequestParam Long professorId) {
+            @RequestParam Long professorId,
+            Model model) {
 
-        // Find the module and professor by ID
+        // Retrieve the module and professor by ID
         Module module = moduleRepository.findById(Math.toIntExact(moduleId))
                 .orElseThrow(() -> new IllegalArgumentException("Invalid module ID: " + moduleId));
         Professor professor = professorRepository.findById(Math.toIntExact(professorId))
                 .orElseThrow(() -> new IllegalArgumentException("Invalid professor ID: " + professorId));
+
+        // Add module and professor data to the model (for re-rendering the form)
+        model.addAttribute("module", module);
+        model.addAttribute("professors", professorRepository.findAll());
+
+        // Validate coefficient value
+        if (coefficient < 20 || coefficient > 100) {
+            model.addAttribute("errorMessage", "Coefficient must be between 20 and 100.");
+            return "Dashboard/admin/createElement"; // Show the form again
+        }
+
+        // Calculate the total coefficient for the module's elements
+        double totalCoefficient = moduleElementRepository.findByModuleId(moduleId)
+                .stream()
+                .mapToDouble(ModuleElement::getCoefficient)
+                .sum();
+
+        // Validate the total coefficient
+        if (totalCoefficient + coefficient > 100) {
+            model.addAttribute("errorMessage", "The total coefficient for this module cannot exceed 100.");
+            return "Dashboard/admin/createElement"; // Show the form again
+        }
 
         // Create and save the new module element
         ModuleElement moduleElement = new ModuleElement();
@@ -85,6 +108,8 @@ public class ModuleElementController {
         // Redirect to the ShowElements page for the module
         return "redirect:/Dashboard/admin/ShowElements/" + moduleId;
     }
+
+
     @GetMapping("/ShowAllElements")
     public String showAllElements(Model model) {
         // Fetch all module elements

@@ -23,19 +23,21 @@ public class ProfManagmentController {
     private UserRepo userrepo ;
     @GetMapping({"/ManageProfs"})
     public String ShowProfs(Model model) {
-//        int userId =  (int) session.getAttribute("userId");
-//        model.addAttribute("userId", userId);
         var profs = profRepo.findAll(Sort.by(Sort.Direction.ASC,"id"));
         model.addAttribute("profs",profs);
         return "Dashboard/admin/ManageProfs";
     }
 
-
     @GetMapping({"/AddProf"})
-    public String AddProf(Model model,@RequestParam int id){
+    public String AddProf(Model model, @RequestParam int id) {
         User user = userrepo.findById(id).orElse(null);
+        if (user == null) {
+            return "redirect:/Dashboard/admin";
+        }
         ProfessorDto profDto = new ProfessorDto();
-        model.addAttribute("profDto",profDto);
+        String generatedCode = "prof_" + id; // Generate the code
+        profDto.setCode(generatedCode); // Set the generated code in the DTO
+        model.addAttribute("profDto", profDto);
         model.addAttribute("user", user);
         return "Dashboard/admin/AddProf";
     }
@@ -51,12 +53,6 @@ public class ProfManagmentController {
         if (user == null) {
             return "redirect:/Dashboard/admin";
         }
-
-        // Validate inputs
-//        if (result.hasErrors()) {
-//            model.addAttribute("user", user); // Pass the user back to the form
-//            return "Dashboard/admin/AddProf";
-//        }
 
         // Check if a Professor already exists for this ID
         Professor prof = profRepo.findById(id).orElse(new Professor());

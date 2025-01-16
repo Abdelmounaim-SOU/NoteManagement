@@ -1,16 +1,103 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr"> <!-- Changed language to French -->
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Client Manager</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion des Clients - Connexion</title> <!-- Updated title in French -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Improved font */
+    }
+    .login-card {
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+      border-radius: 10px; /* Smoother corners */
+      padding: 30px; /* More padding for better spacing */
+      max-width: 450px; /* Limit card width */
+      width: 100%;
+    }
+    .header {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 20px; /* More padding for emphasis */
+      border-radius: 10px 10px 0 0; /* Consistent rounded corners */
+      margin: -30px -30px 25px -30px; /* Adjusted margins */
+    }
+    .header h1 {
+      font-size: 1.8rem; /* Larger heading */
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: 1rem; /* Slightly larger paragraph */
+      margin: 0;
+    }
+    .form-label {
+      font-weight: bold;
+      color: #495057; /* Darker label color */
+    }
+    .form-control {
+      border-radius: 5px; /* Rounded input fields */
+      border: 1px solid #ced4da; /* Subtle border */
+      padding: 10px; /* More padding for inputs */
+    }
+    .form-control:focus {
+      border-color: #007bff; /* Highlight focus */
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle focus shadow */
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      padding: 10px; /* More padding for button */
+      font-size: 1rem; /* Larger button text */
+      border-radius: 5px; /* Rounded button */
+      transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+    .text-danger {
+      font-size: 0.875rem; /* Smaller error text */
+      margin-top: 5px; /* Spacing for error messages */
+    }
+  </style>
 </head>
 <body>
-<div class="container my-3">
-    <h1 class="text-center mb-3">welcome</h1>
-    <a class="btn btn-primary" href="/Login">Login</a>
-
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="login-card">
+        <!-- Welcome Header -->
+        <div class="header">
+          <h1>Bienvenue !</h1> <!-- Translated to French -->
+          <p>Veuillez vous connecter pour continuer</p> <!-- Translated to French -->
+        </div>
+        <!-- Login Form -->
+        <form method="post" th:object="${userDto}">
+          <div class="mb-4">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" type="text" class="form-control" th:field="${userDto.username}" placeholder="Entrez votre email"> <!-- Translated placeholder -->
+            <p th:if="${#fields.hasErrors('username')}" th:errorclass="text-danger" th:errors="${userDto.username}"></p>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label">Mot de passe</label> <!-- Translated to French -->
+            <input id="password" type="password" class="form-control" th:field="${userDto.password}" placeholder="Entrez votre mot de passe"> <!-- Translated placeholder -->
+            <p th:if="${#fields.hasErrors('password')}" th:errorclass="text-danger" th:errors="${userDto.password}"></p>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Se connecter</button> <!-- Translated to French -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

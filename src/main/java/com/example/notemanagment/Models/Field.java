@@ -17,6 +17,9 @@ public class Field {
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Module> modules = new ArrayList<>();
 
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Student> students = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }

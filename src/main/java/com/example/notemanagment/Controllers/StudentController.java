@@ -71,4 +71,18 @@ public String getFieldStudents(
         redirectAttributes.addFlashAttribute("success", "Student added successfully.");
         return "redirect:/Dashboard/admin/fieldStudents/" + fieldId + "/" + semesterId;
     }
+
+    @GetMapping("/studentDetails/{studentId}")
+    public String showStudentDetails(@PathVariable Integer studentId, Model model) {
+        // Find the student by ID
+        Student student = studentRepo.findById(Long.valueOf(studentId)).orElse(null);
+        if (student == null) {
+            // Handle the case where the student is not found
+            return "redirect:/Dashboard/admin"; // Redirect to a safe page
+        }
+
+        // Add the student to the model
+        model.addAttribute("student", student);
+        return "Dashboard/admin/studentDetails"; // Ensure this view exists
+    }
 }

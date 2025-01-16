@@ -2,6 +2,9 @@ package com.example.notemanagment.Models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "professors")
 public class Professor {
@@ -23,6 +26,9 @@ public class Professor {
     @OneToOne
     @JoinColumn(name = "id")
     private User user;
+
+    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ModuleElement> moduleElements = new ArrayList<>();
 
     public int getId() {
         return id;

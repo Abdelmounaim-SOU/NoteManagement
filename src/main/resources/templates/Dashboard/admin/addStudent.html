@@ -1,72 +1,104 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr"> <!-- Changed language to French -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Student</title>
+    <title>Ajouter un Étudiant</title> <!-- Updated title in French -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consistent font */
         }
 
         .form-container {
             max-width: 500px;
             background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px; /* Smoother corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Consistent shadow */
             padding: 30px;
             margin: 50px auto;
         }
 
         .form-container h1 {
-            font-size: 24px;
+            font-size: 1.8rem; /* Larger heading */
             font-weight: bold;
-            color: #343a40;
+            color: #007bff; /* Primary color for heading */
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #495057; /* Darker label color */
+        }
+
+        .form-control {
+            border-radius: 5px; /* Rounded input fields */
+            border: 1px solid #ced4da; /* Subtle border */
+            padding: 10px; /* More padding for inputs */
+        }
+
+        .form-control:focus {
+            border-color: #007bff; /* Highlight focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle focus shadow */
         }
 
         .btn-success {
             background-color: #198754;
-            border-color: #198754;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            padding: 10px; /* More padding for button */
+            font-size: 1rem; /* Larger button text */
+            border-radius: 5px; /* Rounded button */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
         }
 
         .btn-success:hover {
             background-color: #157347;
-            transform: scale(1.05);
+            transform: scale(1.05); /* Slight scale effect on hover */
         }
 
         .btn-secondary {
-            transition: transform 0.2s ease;
+            background-color: #6c757d;
+            border: none;
+            padding: 10px; /* More padding for button */
+            font-size: 1rem; /* Larger button text */
+            border-radius: 5px; /* Rounded button */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
         }
 
         .btn-secondary:hover {
-            transform: scale(1.05);
+            background-color: #5a6268;
+            transform: scale(1.05); /* Slight scale effect on hover */
         }
 
-        label {
-            font-weight: 500;
+        .text-danger {
+            font-size: 0.875rem; /* Smaller error text */
+            margin-top: 5px; /* Spacing for error messages */
         }
     </style>
 </head>
 <body>
 <div class="form-container">
-    <h1 class="text-center mb-4">Add New Student</h1>
+    <h1 class="text-center mb-4">Ajouter un Étudiant</h1> <!-- Translated to French -->
     <form th:action="@{/Dashboard/admin/fieldStudents/{fieldId}/{semesterId}/addStudent(fieldId=${fieldId}, semesterId=${semesterId})}"
           th:object="${student}" method="post">
+        <!-- First Name -->
         <div class="mb-4">
-            <label for="name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Enter first name" required>
+            <label for="name" class="form-label">Prénom</label> <!-- Translated to French -->
+            <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Entrez le prénom" required> <!-- Translated placeholder -->
         </div>
+        <!-- Last Name -->
         <div class="mb-4">
-            <label for="surname" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="surname" name="surname" th:field="*{surname}" placeholder="Enter last name" required>
+            <label for="surname" class="form-label">Nom de famille</label> <!-- Translated to French -->
+            <input type="text" class="form-control" id="surname" name="surname" th:field="*{surname}" placeholder="Entrez le nom de famille" required> <!-- Translated placeholder -->
         </div>
+        <!-- Buttons -->
         <div class="d-flex justify-content-between align-items-center">
-            <button type="submit" class="btn btn-success px-4">Add</button>
+            <button type="submit" class="btn btn-success px-4">Ajouter</button> <!-- Translated to French -->
             <a class="btn btn-secondary px-4"
                th:href="@{/Dashboard/admin/fieldStudents/{fieldId}/{semesterId}(fieldId=${fieldId}, semesterId=${semesterId})}">
-                Cancel
+                Annuler <!-- Translated to French -->
             </a>
         </div>
     </form>

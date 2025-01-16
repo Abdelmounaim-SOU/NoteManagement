@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/Login")
 public class Login_Controller {
     @Autowired
     private UserRepo userRepo;
@@ -29,7 +28,7 @@ public class Login_Controller {
         UserDto userDto = new UserDto();
         initializeSemesters();
         model.addAttribute("userDto",userDto);
-        return "Login/index";
+        return "index";
     }
     @PostMapping
     public String Login(@Valid @ModelAttribute UserDto userDto, BindingResult result, HttpSession session) {
@@ -42,7 +41,7 @@ public class Login_Controller {
             result.addError(
                     new FieldError("userDto", "username", userDto.getUsername(), false, null, null, "Username not found")
             );
-            return "Login/index";
+            return "index";
         }
 
         // Check the role and password
@@ -56,7 +55,7 @@ public class Login_Controller {
             result.addError(
                     new FieldError("userDto", "role", user.getRole(), false, null, null, "Invalid role")
             );
-            return "Login/index";
+            return "index";
         }
     }
     private void initializeSemesters() {

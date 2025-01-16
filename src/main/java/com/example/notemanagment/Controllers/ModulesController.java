@@ -33,6 +33,11 @@ public class ModulesController {
     public String createModule(@PathVariable Integer fieldId, Model model) {
         ModuleDto moduleDto = new ModuleDto();
         moduleDto.setFieldId(fieldId); // Pre-set the fieldId in the DTO
+
+        // Generate a default module code (this can be adjusted based on your requirements)
+        String generatedCode = "MOD_" + fieldId + "_" + (int) (Math.random() * 10000000);
+        moduleDto.setCode(generatedCode); // Set the generated code
+
         model.addAttribute("moduleDto", moduleDto);
 
         // Fetch all semesters to populate the dropdown
@@ -41,6 +46,7 @@ public class ModulesController {
 
         return "Dashboard/admin/createModule";
     }
+
 
     @PostMapping("/createModule/{fieldId}")
     public String saveModule(

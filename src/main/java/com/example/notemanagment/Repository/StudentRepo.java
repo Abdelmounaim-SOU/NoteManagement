@@ -1,5 +1,7 @@
 package com.example.notemanagment.Repository;
 
+import com.example.notemanagment.Models.Field;
+import com.example.notemanagment.Models.Semester;
 import com.example.notemanagment.Models.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +12,5 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
 
     List<Student> findByFieldIdAndSemesterId(Integer fieldId, Long semesterId);
     List<Student> findBySemester_IdAndField_Id(Long semesterId, Long fieldId);
+    List<Student> findByFieldAndSemester(Field field, Semester semester);
 }

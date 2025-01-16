@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-
 @Controller
 @RequestMapping("/Dashboard/admin")
 public class EvaluationsController {
@@ -34,6 +33,7 @@ public class EvaluationsController {
 
         model.addAttribute("moduleElement", moduleElement);
         model.addAttribute("evaluations", evaluations);
+        model.addAttribute("evaluation", new Evaluation());
 
         return "Dashboard/admin/elementEvaluations";
     }
@@ -44,25 +44,62 @@ public class EvaluationsController {
             @PathVariable Long elementId,
             @ModelAttribute("evaluation") Evaluation evaluation,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Model model
     ) {
-        if (result.hasErrors()) {
-            // If validation fails, return to the same page with errors
-            return "Dashboard/admin/elementEvaluations";
-        }
-
-        // Find the ModuleElement by ID
         ModuleElement element = moduleElementRepo.findById(elementId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid element ID"));
 
-        // Associate the evaluation with the element
-        evaluation.setModuleElement(element);
+        // Validation for coefficient
+        if (evaluation.getCoefficient() < 0 || evaluation.getCoefficient() > 100) {
+            result.rejectValue("coefficient", "error.coefficient", "Coefficient must be between 0 and 100.");
+        }
+
+        // Calculate the sum of existing coefficients
+        double totalCoefficient = element.getEvaluations().stream()
+                .mapToDouble(Evaluation::getCoefficient)
+                .sum();
+
+        if (totalCoefficient + evaluation.getCoefficient() > 100) {
+            result.rejectValue("coefficient", "error.coefficientSum",
+                    "The sum of coefficients for all evaluations in this module must not exceed 100.");
+        }
+
+        if (result.hasErrors()) {
+            List<Evaluation> evaluations = element.getEvaluations();
+            model.addAttribute("moduleElement", element);
+            model.addAttribute("evaluations", evaluations);
+            return "Dashboard/admin/elementEvaluations";
+        }
 
         // Save the evaluation
+        evaluation.setModuleElement(element);
         evaluationRepo.save(evaluation);
 
-        // Redirect to the evaluations page for the element
+        // Add success message
         redirectAttributes.addFlashAttribute("successMessage", "Evaluation added successfully!");
+        return "redirect:/Dashboard/admin/elementEvaluations/" + elementId;
+    }
+
+    @PostMapping("/deleteEvaluation/{evaluationId}")
+    public String deleteEvaluation(
+            @PathVariable Long evaluationId,
+            RedirectAttributes redirectAttributes
+    ) {
+        // Find the evaluation by ID
+        Evaluation evaluation = evaluationRepo.findById(evaluationId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID"));
+
+        // Get the associated element ID for redirection
+        Long elementId = evaluation.getModuleElement().getId();
+
+        // Delete the evaluation
+        evaluationRepo.delete(evaluation);
+
+        // Add success message
+        redirectAttributes.addFlashAttribute("successMessage", "Evaluation deleted successfully!");
+
+        // Redirect to the evaluations page for the element
         return "redirect:/Dashboard/admin/elementEvaluations/" + elementId;
     }
 

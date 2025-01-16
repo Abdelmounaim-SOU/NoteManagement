@@ -1,25 +1,97 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr"> <!-- Changed language to French -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Client Manager</title>
+    <title>Gestion des Professeurs - Modifier le Client</title> <!-- Updated title in French -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consistent font */
+        }
+
+        .container {
+            margin-top: 2rem;
+        }
+
+        .rounded-border {
+            background-color: white;
+            border-radius: 10px; /* Smoother corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+            padding: 2rem; /* More padding for better spacing */
+        }
+
+        h2 {
+            color: #007bff; /* Primary color for heading */
+            font-size: 1.8rem; /* Larger heading */
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #495057; /* Darker label color */
+        }
+
+        .form-control, .form-select {
+            border-radius: 5px; /* Rounded input fields */
+            border: 1px solid #ced4da; /* Subtle border */
+            padding: 10px; /* More padding for inputs */
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #007bff; /* Highlight focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle focus shadow */
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px; /* More padding for button */
+            font-size: 1rem; /* Larger button text */
+            border-radius: 5px; /* Rounded button */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* Slight scale effect on hover */
+        }
+
+        .btn-outline-primary {
+            border-radius: 5px; /* Rounded button */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.05); /* Slight scale effect on hover */
+        }
+
+        .text-danger {
+            font-size: 0.875rem; /* Smaller error text */
+            margin-top: 5px; /* Spacing for error messages */
+        }
+    </style>
 </head>
 <body>
 <div class="container my-3">
     <div class="row">
-        <div class="col-md-8 mx-auto rounded border p-4">
-            <h2 class="text-center mb-5">Edit Client</h2>
+        <div class="col-md-8 mx-auto rounded-border">
+            <h2 class="text-center mb-5">Modifier le Professeur</h2> <!-- Translated to French -->
             <form method="post" th:object="${userDto}">
+                <!-- User ID -->
                 <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">User Id</label>
+                    <label class="col-sm-4 col-form-label">ID de l'utilisateur</label> <!-- Translated to French -->
                     <div class="col-sm-8">
                         <input readonly class="form-control-plaintext" th:value="${user.id}">
                     </div>
                 </div>
+                <!-- User Name -->
                 <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">UserName</label>
+                    <label class="col-sm-4 col-form-label">Nom d'utilisateur</label> <!-- Translated to French -->
                     <div class="col-sm-8">
                         <input class="form-control" th:field="${userDto.username}">
                         <p th:if="${#fields.hasErrors('username')}"
@@ -27,41 +99,43 @@
                            th:errors="${userDto.username}"></p>
                     </div>
                 </div>
+                <!-- Password -->
                 <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">password</label>
+                    <label class="col-sm-4 col-form-label">Mot de passe</label> <!-- Translated to French -->
                     <div class="col-sm-8">
-                        <input type=password class="form-control" th:field="${userDto.password}">
+                        <input type="password" class="form-control" th:field="${userDto.password}">
                         <p th:if="${#fields.hasErrors('password')}"
                            th:errorclass="text-danger"
                            th:errors="${userDto.password}"></p>
                     </div>
                 </div>
+                <!-- Role -->
                 <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">Role</label>
+                    <label class="col-sm-4 col-form-label">Rôle</label> <!-- Translated to French -->
                     <div class="col-sm-8">
                         <select class="form-select" th:field="${userDto.role}">
-                            <option value="admin" >Admin</option>
-                            <option value="prof" >Professor</option>
+                            <option value="admin">Admin</option>
+                            <option value="prof">Professeur</option> <!-- Translated to French -->
                         </select>
                         <p th:if="${#fields.hasErrors('role')}"
                            th:errorclass="text-danger"
                            th:errors="${userDto.role}"></p>
                     </div>
                 </div>
+                <!-- Buttons -->
                 <div class="row mb-3">
                     <div class="row">
                         <div class="offset-sm-4 col-sm-4 d-grid">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Soumettre</button> <!-- Translated to French -->
                         </div>
                         <div class="col-sm-4 d-grid">
-                            <a class="btn btn-outline-primary" href="/Dashboard/admin/">Cancel</a>
+                            <a class="btn btn-outline-primary" href="/Dashboard/admin/">Annuler</a> <!-- Translated to French -->
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
